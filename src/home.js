@@ -1,11 +1,11 @@
-import { useLocation } from "react-router-dom";
+//import { useLocation } from "react-router-dom";
 import Profile from "./profile";
 import SectionList from "./sections";
 import Status from "./status";
 import Feeds from "./feeds";
 
 function Home() {
-  const location = useLocation();
+  // const location = useLocation();
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
