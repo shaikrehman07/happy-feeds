@@ -43,14 +43,18 @@ function Login() {
       })
         .then((res) => {
           console.log(res.data);
-          navigate("/home", {
+          return navigate("/home", {
             state: {
               name: res.data.name,
               email: res.data.email,
             },
           });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          return {
+            body: `Error: ${err}`,
+          };
+        });
     } else {
       alert("Email or Password is empty...");
     }
