@@ -52,6 +52,7 @@ function Login() {
           });
         })
         .catch((err) => {
+          console.log(err.data);
           return {
             body: `Error: ${err}`,
           };
