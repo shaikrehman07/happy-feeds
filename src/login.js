@@ -36,7 +36,7 @@ function Login() {
 
     if (loginDetails.email && loginDetails.password) {
       e.preventDefault();
-      axios({
+      const result = axios({
         method: "post",
         url: "/login",
         data: JSON.stringify(loginDetails),
@@ -44,19 +44,24 @@ function Login() {
         .then((res) => {
           console.log(res.data);
 
-          return navigate("/home", {
-            state: {
-              name: res.data.name,
-              email: res.data.email,
-            },
-          });
+          return JSON.stringify(res.data);
         })
         .catch((err) => {
-          console.log(err.data);
+          console.log(err);
           return {
             body: `Error: ${err}`,
           };
         });
+
+      console.log(result);
+
+      const resultObject = JSON.parse(result);
+      return navigate("/home", {
+        state: {
+          name: resultObject.name,
+          email: resultObject.email,
+        },
+      });
     } else {
       alert("Email or Password is empty...");
     }
