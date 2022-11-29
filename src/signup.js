@@ -46,9 +46,13 @@ function SignUp() {
       })
         .then((res) => {
           console.log(res.data);
-          navigate("/");
+          return navigate("/");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          return {
+            body: `Error: ${err}`,
+          };
+        });
     }
   }
 
