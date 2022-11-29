@@ -3,17 +3,16 @@ import Login from "./login";
 import SignUp from "./signup";
 import Home from "./home";
 
-function RouterSetup(){
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Login/>}/>
-                <Route path="/home" element={<Home />}/>
-                <Route path="/signup" element={<SignUp />}/>
-            </Routes>
-        </Router>
-    );
-
+function RouterSetup() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default RouterSetup;
