@@ -39,10 +39,11 @@ function Login() {
       axios({
         method: "post",
         url: "/login",
-        data: loginDetails,
+        data: JSON.stringify(loginDetails),
       })
         .then((res) => {
           console.log(res.data);
+
           return navigate("/home", {
             state: {
               name: res.data.name,

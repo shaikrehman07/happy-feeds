@@ -37,12 +37,12 @@ function SignUp() {
       axios({
         method: "post",
         url: "/users",
-        data: {
+        data: JSON.stringify({
           firstName: signUpDetails.firstName,
           lastName: signUpDetails.lastName,
           email: signUpDetails.email,
           password: signUpDetails.password,
-        },
+        }),
       })
         .then((res) => {
           console.log(res.data);
