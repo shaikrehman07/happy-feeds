@@ -15,7 +15,7 @@ function SectionList() {
   const [isHoveringLogout, setIsHoveringLogout] = useState(false);
 
   return (
-    <div className="mt-16 px-7">
+    <div className="w-44 border-2 border-rose-900 mx-10 mt-8">
       <div
         className="flex hover:font-semibold py-2"
         onMouseOver={() => {

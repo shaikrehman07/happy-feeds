@@ -1,11 +1,12 @@
 function Profile() {
   return (
-    <div className="px-2 py-5 rounded-md">
+    <div className="border-2 border-black mx-10 pt-5">
       <div className="flex flex-col items-center">
         <div className="h-24 w-24 rounded-full bg-slate-200 ring-2 ring-slate-400"></div>
-        <div className="p-3">FName LName</div>
+        <div className="pt-3">FName LName</div>
       </div>
-      <div className="px-5">
+
+      <div className="mt-5">
         <div className="">I am great</div>
         <div className="">
           Friends: <span>50</span>

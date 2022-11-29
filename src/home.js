@@ -8,21 +8,30 @@ function Home() {
   const location = useLocation();
 
   return (
-    <div className="flex flex-row gap-2">
-      {/* <h3>Hello, {location.state.name}</h3> */}
-      <div className="w-72">
-        <div className="">
-          <Profile />
+    <div className="h-screen flex flex-col overflow-hidden">
+      <nav className="flex flex-none items-center py-2 justify-between flex-wrap bg-gray-400">
+        <h1 className="p-3">Logo</h1>
+      </nav>
+
+      <div className="flex-1 flex overflow-hidden">
+        <div className="w-80 bg-indigo-100">
+          <div className="">
+            <Profile />
+          </div>
+          <div className="">
+            <SectionList />
+          </div>
         </div>
-        <div className="">
-          <SectionList />
+
+        <div className="flex bg-yellow-100 w-3/5">
+          <div className="px-6 flex-1 overflow-y-auto">
+            <Feeds />
+            <Feeds />
+          </div>
         </div>
-      </div>
-      <div className="h-screen mx-10 grow overflow-y-auto bg-indigo-500">
-        <Feeds />
-      </div>
-      <div className="w-96">
-        <Status />
+        <div className="flex-auto bg-blue-200">
+          <Status />
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 function Status() {
   return (
-    <div className="border">
+    <div className="border-2 border-black mx-10 pt-5 w-80">
       <h3>
         Streaks: <span>100</span>
       </h3>
