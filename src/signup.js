@@ -36,7 +36,7 @@ function SignUp() {
     ) {
       axios({
         method: "post",
-        url: "/users",
+        url: "/api/users",
         data: JSON.stringify({
           firstName: signUpDetails.firstName,
           lastName: signUpDetails.lastName,
@@ -49,9 +49,7 @@ function SignUp() {
           return navigate("/");
         })
         .catch((err) => {
-          return {
-            body: `Error: ${err}`,
-          };
+          return JSON.stringify({ error: err.message });
         });
     }
   }

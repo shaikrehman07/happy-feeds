@@ -28,7 +28,7 @@ function Login() {
     setLoginDetails({ ...loginDetails, [name]: value });
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     if (errorMessage) {
       console.log("not executed...");
       return;
@@ -36,29 +36,24 @@ function Login() {
 
     if (loginDetails.email && loginDetails.password) {
       e.preventDefault();
-      const result = await axios({
+      axios({
         method: "post",
-        url: "/login",
+        url: "/api/login",
         data: JSON.stringify(loginDetails),
       })
         .then((res) => {
           console.log(res.data);
 
-          return JSON.stringify(res.data);
+          return navigate("/home", {
+            state: {
+              name: res.data.name,
+              email: res.data.email,
+            },
+          });
         })
         .catch((err) => {
           return JSON.stringify({ error: err.message });
         });
-
-      console.log(result);
-
-      const resultObject = JSON.parse(result);
-      return navigate("/home", {
-        state: {
-          name: resultObject.name,
-          email: resultObject.email,
-        },
-      });
     } else {
       alert("Email or Password is empty...");
     }
