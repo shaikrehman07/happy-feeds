@@ -1,1 +1,2 @@
-/* https://etk12ntpib.execute-api.us-east-1.amazonaws.com/Prod/:splat 200
+/api/* https://etk12ntpib.execute-api.us-east-1.amazonaws.com/Prod/:splat 200
+/* /index.html 200
