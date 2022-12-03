@@ -1,8 +1,11 @@
+import LoginStatus from "./LoginStatus";
 import RouterSetup from "./RouterSetup";
 
 function App() {
   return (
-    <RouterSetup />
+    <LoginStatus>
+      <RouterSetup />
+    </LoginStatus>
   );
 }
 

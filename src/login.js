@@ -1,26 +1,45 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { LoginContext } from "./LoginStatus";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function Login() {
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(false);
-  let button_disable = false;
+  //let button_disable = false;
+  const [btnDisable, setBtnDisable] = useState(false);
+  const [invalidDetails, setInvalidDetails] = useState(false);
+
+  const [wrongDetails, setWrongDetails] = useState(false);
+
+  const { setLoggedIn } = useContext(LoginContext);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (loginDetails.email) {
+      setInvalidDetails(false);
+    }
+    if (loginDetails.password) {
+      setInvalidDetails(false);
+    }
+
     if (loginDetails.email && !loginDetails.email.includes("@gmail.")) {
       setErrorMessage(true);
     } else {
       setErrorMessage(false);
     }
-  }, [loginDetails.email]);
 
-  if (errorMessage) {
-    button_disable = true;
-  } else {
-    button_disable = false;
-  }
+    setWrongDetails(false);
+  }, [loginDetails.email, loginDetails.password]);
+
+  // if (errorMessage) {
+  //   button_disable = true;
+  // } else {
+  //   button_disable = false;
+  // }
 
   function handleChange(e) {
     const name = e.target.name;
@@ -29,13 +48,22 @@ function Login() {
   }
 
   function handleSubmit(e) {
+    e.preventDefault();
+    if (!loginDetails.email || !loginDetails.password) {
+      setInvalidDetails(true);
+      return;
+    }
     if (errorMessage) {
       console.log("not executed...");
       return;
     }
-
+    if (btnDisable) {
+      console.log("disabled....");
+      return;
+    }
     if (loginDetails.email && loginDetails.password) {
-      e.preventDefault();
+      setBtnDisable(true);
+      setIsLoading(true);
       axios({
         method: "post",
         url: "/api/login",
@@ -43,7 +71,11 @@ function Login() {
       })
         .then((res) => {
           console.log(res.data);
-
+          //localStorage.setItem("AccessToken", res.headers.accesstoken);
+          //localStorage.setItem("IdToken", res.headers.idtoken);
+          setLoggedIn(true);
+          setIsLoading(false);
+          setBtnDisable(false);
           return navigate("/home", {
             state: {
               name: res.data.name,
@@ -52,10 +84,12 @@ function Login() {
           });
         })
         .catch((err) => {
-          return JSON.stringify({ error: err.message });
+          setBtnDisable(false);
+          setIsLoading(false);
+          setWrongDetails(true);
+          console.log(err.response.data);
+          return { error: err.message };
         });
-    } else {
-      alert("Email or Password is empty...");
     }
   }
 
@@ -63,11 +97,21 @@ function Login() {
     <section>
       <form>
         <div className="h-screen flex flex-col items-center justify-center">
-          <div className="flex flex-col items-start space-y-5">
-            <div className="text-2xl font-semibold ">
+          <div className="flex flex-col items-stretch space-y-5">
+            <div className="text-2xl font-semibold self-start">
               Sign in to your account.
+              {invalidDetails && (
+                <p className="mt-2 text-red-600 font-medium antialiased text-sm">
+                  Email address or Password is empty....
+                </p>
+              )}
+              {wrongDetails && (
+                <p className="mt-2 text-red-600 font-medium antialiased text-sm">
+                  Email address or Password is wrong....
+                </p>
+              )}
             </div>
-            <div>
+            <div className="self-start">
               <div className="font-medium antialiased">Email</div>
               <input
                 type="email"
@@ -82,7 +126,7 @@ function Login() {
                 </p>
               )}
             </div>
-            <div>
+            <div className="self-start">
               <div className="font-medium antialiased">Password</div>
               <input
                 type="password"
@@ -96,12 +140,18 @@ function Login() {
               <button
                 className="bg-cyan-600 hover:bg-cyan-700 py-1 w-80 rounded mt-2 text-white text-lg font-semibold"
                 onClick={handleSubmit}
-                disabled={button_disable}
+                disabled={btnDisable}
               >
                 Login
               </button>
             </div>
-            <div>
+            {isLoading && (
+              <AiOutlineLoading3Quarters
+                className="h-4 w-4 animate-spin text-black self-center"
+                size="8px"
+              />
+            )}
+            <div className="self-start">
               <span className="font-medium text-neutral-600 text-sm">
                 No Account?
               </span>

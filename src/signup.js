@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function SignUp() {
   const [signUpDetails, setSignUpDetails] = useState({
@@ -13,7 +14,10 @@ function SignUp() {
 
   const [errorMessageEmail, setErrorMessageEmail] = useState(false);
   const [errorMessagePassword, setErrorMessagePassword] = useState(false);
-  let button_disable = false;
+  const [errorMessagePasswordValidation, setErrorMessagePasswordValidation] =
+    useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [btnDisable, setBtnDisable] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,16 +28,22 @@ function SignUp() {
   }
 
   function handleSubmit(e) {
+    e.preventDefault();
     if (errorMessageEmail || errorMessagePassword) {
       return;
     }
-    e.preventDefault();
+    if (btnDisable) {
+      console.log("disabled....");
+      return;
+    }
     if (
       signUpDetails.email &&
       signUpDetails.password &&
       signUpDetails.firstName &&
       signUpDetails.lastName
     ) {
+      setIsLoading(true);
+      setBtnDisable(true);
       axios({
         method: "post",
         url: "/api/users",
@@ -46,10 +56,14 @@ function SignUp() {
       })
         .then((res) => {
           console.log(res.data);
+          setIsLoading(false);
+          setBtnDisable(false);
           return navigate("/");
         })
         .catch((err) => {
-          return JSON.stringify({ error: err.message });
+          setIsLoading(false);
+          setBtnDisable(false);
+          return { error: err.message };
         });
     }
   }
@@ -59,6 +73,18 @@ function SignUp() {
       setErrorMessageEmail(true);
     } else {
       setErrorMessageEmail(false);
+    }
+
+    var regularExpression =
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+
+    if (
+      signUpDetails.password &&
+      !regularExpression.test(signUpDetails.password)
+    ) {
+      setErrorMessagePasswordValidation(true);
+    } else {
+      setErrorMessagePasswordValidation(false);
     }
 
     if (
@@ -75,12 +101,6 @@ function SignUp() {
     signUpDetails.confirmPassword,
     signUpDetails.password,
   ]);
-
-  if (errorMessageEmail || errorMessagePassword) {
-    button_disable = true;
-  } else {
-    button_disable = false;
-  }
 
   return (
     <form>
@@ -133,9 +153,9 @@ function SignUp() {
               onChange={handleChange}
               className="mt-1 border border-slate-300 focus:border-sky-500 rounded p-1 w-96 placeholder-slate-400 focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600"
             />
-            {errorMessagePassword && (
+            {errorMessagePasswordValidation && (
               <p className="text-red-600 font-medium antialiased text-sm">
-                Passwords do not match.
+                contain atleast 1 (cap,small,number,special) & length min 8.
               </p>
             )}
           </div>
@@ -148,16 +168,27 @@ function SignUp() {
               onChange={handleChange}
               className="mt-1 border border-slate-300 focus:border-sky-500 rounded p-1 w-96 placeholder-slate-400 focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600"
             />
+            {errorMessagePassword && (
+              <p className="text-red-600 font-medium antialiased text-sm">
+                Passwords do not match.
+              </p>
+            )}
           </div>
           <div>
             <button
               className="w-96 bg-cyan-600 hover:bg-cyan-700 py-1 mt-2 rounded text-white tet-lg font-semibold"
               onClick={handleSubmit}
-              disabled={button_disable}
+              disabled={btnDisable}
             >
               Sign Up
             </button>
           </div>
+          {isLoading && (
+            <AiOutlineLoading3Quarters
+              className="h-4 w-4 animate-spin text-black self-center"
+              size="8px"
+            />
+          )}
           <div>
             <span className="font-medium text-neutral-600 text-sm">
               Already have an account?
