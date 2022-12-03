@@ -29,7 +29,11 @@ function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (errorMessageEmail || errorMessagePassword) {
+    if (
+      errorMessageEmail ||
+      errorMessagePassword ||
+      errorMessagePasswordValidation
+    ) {
       return;
     }
     if (btnDisable) {
@@ -154,8 +158,9 @@ function SignUp() {
               className="mt-1 border border-slate-300 focus:border-sky-500 rounded p-1 w-96 placeholder-slate-400 focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600"
             />
             {errorMessagePasswordValidation && (
-              <p className="text-red-600 font-medium antialiased text-sm">
-                contain atleast 1 (cap,small,number,special) & length min 8.
+              <p className="text-red-600 font-medium antialiased text-sm w-96">
+                contains atleast 1 (cap, small, number, special) and length
+                should be minimum 8.
               </p>
             )}
           </div>
