@@ -75,20 +75,22 @@ function Login() {
             JSON.stringify(res.headers.accesstoken)
           );
           localStorage.setItem("IdToken", JSON.stringify(res.headers.idtoken));
-          //console.log(JSON.parse(localStorage.getItem("IdToken")));
-          const config = {
-            headers: {
-              Authorization: JSON.parse(localStorage.getItem("IdToken")),
-              AccessToken: JSON.parse(localStorage.getItem("AccessToken")),
-            },
+
+          const setHeaders = {
+            Authorization: JSON.parse(localStorage.getItem("IdToken")),
+            AccessToken: JSON.parse(localStorage.getItem("AccessToken")),
           };
           setLoggedIn(true);
           setIsLoading(false);
           setBtnDisable(false);
           if (res.data.statusCode === "200") {
-            axios
-              .get("/api/me", config)
+            axios({
+              method: "get",
+              url: "/api/me",
+              headers: setHeaders,
+            })
               .then((res) => {
+                console.log(res);
                 return navigate("/home", {
                   state: {
                     name: res.data.user.name,
@@ -97,6 +99,7 @@ function Login() {
                 });
               })
               .catch((err) => {
+                console.log(err);
                 return { error: err.message };
               });
           }
