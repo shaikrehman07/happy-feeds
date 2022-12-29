@@ -3,6 +3,7 @@ import Login from "./login";
 import SignUp from "./signup";
 import Home from "./home";
 import ProtectedRoutes from "./ProtectedRoutes";
+import Example from "./Dialog";
 
 function RouterSetup() {
   return (
@@ -13,6 +14,7 @@ function RouterSetup() {
           <Route path="/home" element={<Home />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/diag" element={<Example />} />
       </Routes>
     </Router>
   );

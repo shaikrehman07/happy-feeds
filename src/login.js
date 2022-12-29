@@ -70,18 +70,36 @@ function Login() {
         data: JSON.stringify(loginDetails),
       })
         .then((res) => {
-          console.log(res.data);
-          //localStorage.setItem("AccessToken", res.headers.accesstoken);
-          //localStorage.setItem("IdToken", res.headers.idtoken);
+          localStorage.setItem(
+            "AccessToken",
+            JSON.stringify(res.headers.accesstoken)
+          );
+          localStorage.setItem("IdToken", JSON.stringify(res.headers.idtoken));
+          //console.log(JSON.parse(localStorage.getItem("IdToken")));
+          const config = {
+            headers: {
+              Authorization: JSON.parse(localStorage.getItem("IdToken")),
+              AccessToken: JSON.parse(localStorage.getItem("AccessToken")),
+            },
+          };
           setLoggedIn(true);
           setIsLoading(false);
           setBtnDisable(false);
-          return navigate("/home", {
-            state: {
-              name: res.data.name,
-              email: res.data.email,
-            },
-          });
+          if (res.data.statusCode === "200") {
+            axios
+              .get("/api/me", config)
+              .then((res) => {
+                return navigate("/home", {
+                  state: {
+                    name: res.data.user.name,
+                    email: res.data.user.email,
+                  },
+                });
+              })
+              .catch((err) => {
+                return { error: err.message };
+              });
+          }
         })
         .catch((err) => {
           setBtnDisable(false);

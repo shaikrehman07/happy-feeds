@@ -9,6 +9,7 @@ import {
 import { useContext, useState } from "react";
 import { LoginContext } from "./LoginStatus";
 import { Navigate } from "react-router-dom";
+import Example from "./Dialog";
 
 function SectionList() {
   const [isHoveringHome, setIsHoveringHome] = useState(false);
@@ -54,7 +55,15 @@ function SectionList() {
             <IoIosAddCircleOutline size="20px" />
           )}
         </div>
-        <button className="">Create</button>
+        <button
+          className=""
+          onClick={() => {
+            console.log("create clicked");
+            return <Example />;
+          }}
+        >
+          Create
+        </button>
       </div>
       <div
         className="flex hover:font-semibold py-2"
