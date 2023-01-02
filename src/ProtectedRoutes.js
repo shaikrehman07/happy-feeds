@@ -4,7 +4,7 @@ import { LoginContext } from "./LoginStatus";
 
 function ProtectedRoutes() {
   const { loggedIn } = useContext(LoginContext);
-  return loggedIn ? <Outlet /> : <Navigate to="/" />;
+  return loggedIn ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default ProtectedRoutes;

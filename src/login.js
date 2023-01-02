@@ -91,12 +91,17 @@ function Login() {
             })
               .then((res) => {
                 console.log(res);
-                return navigate("/home", {
-                  state: {
-                    name: res.data.user.name,
-                    email: res.data.user.email,
-                  },
-                });
+
+                localStorage.setItem(
+                  "name",
+                  JSON.stringify(res.data.user.name)
+                );
+                localStorage.setItem(
+                  "email",
+                  JSON.stringify(res.data.user.email)
+                );
+
+                return navigate("/me");
               })
               .catch((err) => {
                 console.log(err);

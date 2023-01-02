@@ -8,19 +8,27 @@ import {
 } from "react-icons/io5";
 import { useContext, useState } from "react";
 import { LoginContext } from "./LoginStatus";
-import { Navigate } from "react-router-dom";
-import Example from "./Dialog";
+import { Navigate, NavLink } from "react-router-dom";
+import Modal from "./Dialog";
 
 function SectionList() {
   const [isHoveringHome, setIsHoveringHome] = useState(false);
   const [isHoveringMemories, setIsHoveringMemories] = useState(false);
   const [isHoveringSetting, setIsHoveringSetting] = useState(false);
   const [isHoveringLogout, setIsHoveringLogout] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const { setLoggedIn } = useContext(LoginContext);
 
   return (
-    <div className="w-44 border-2 border-rose-900 mx-10 mt-8">
+    <div className="border-2 border-rose-900 mx-10 mt-8">
+      {showModal ? (
+        <Modal
+          handleClose={() => {
+            setShowModal(false);
+          }}
+        />
+      ) : null}
       <div
         className="flex hover:font-semibold py-2"
         onMouseOver={() => {
@@ -37,7 +45,7 @@ function SectionList() {
             <AiOutlineHome size="20px" />
           )}
         </div>
-        <button className="">Home</button>
+        <NavLink to="/me/home">Home</NavLink>
       </div>
       <div
         className="flex hover:font-semibold py-2"
@@ -58,8 +66,7 @@ function SectionList() {
         <button
           className=""
           onClick={() => {
-            console.log("create clicked");
-            return <Example />;
+            setShowModal(true);
           }}
         >
           Create
@@ -81,7 +88,7 @@ function SectionList() {
             <IoSettingsOutline size="20px" />
           )}
         </div>
-        <button className="">Profile Settings</button>
+        <NavLink to="/me/settings">Profile Settings</NavLink>
       </div>
       <div
         className="flex hover:font-semibold py-2"
@@ -103,7 +110,7 @@ function SectionList() {
           className=""
           onClick={() => {
             setLoggedIn(false);
-            <Navigate to="/" />;
+            <Navigate to="/login" />;
           }}
         >
           Logout

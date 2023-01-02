@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./login";
 import SignUp from "./signup";
-import Home from "./home";
 import ProtectedRoutes from "./ProtectedRoutes";
-import Example from "./Dialog";
+import MainPage from "./MainPage";
+import Setting from "./Setting";
+import Home from "./home";
 
 function RouterSetup() {
   return (
@@ -11,10 +12,13 @@ function RouterSetup() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path="/home" element={<Home />} />
+          <Route path="/me" element={<MainPage />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="settings" element={<Setting />} />
+          </Route>
         </Route>
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/diag" element={<Example />} />
       </Routes>
     </Router>
   );
