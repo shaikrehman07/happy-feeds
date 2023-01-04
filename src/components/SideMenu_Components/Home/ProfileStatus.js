@@ -1,4 +1,4 @@
-function Status() {
+function ProfileStatus() {
   return (
     <div className="border-2 border-black mx-10 pt-5 w-80">
       <h3>
@@ -17,4 +17,4 @@ function Status() {
   );
 }
 
-export default Status;
+export default ProfileStatus;

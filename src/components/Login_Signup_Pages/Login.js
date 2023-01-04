@@ -1,28 +1,34 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LoginContext } from "./LoginStatus";
+//import { LoginContext } from "./LoginStatus";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function Login() {
-  const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
+  //navigate to main layout page
   const navigate = useNavigate();
+  //email and password field data
+  const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
+  //to show error messages for field validations
   const [errorMessage, setErrorMessage] = useState(false);
-  //let button_disable = false;
+  // disable button till the response is loaded
   const [btnDisable, setBtnDisable] = useState(false);
+  //to show both or either field data is empty
   const [invalidDetails, setInvalidDetails] = useState(false);
-
+  //to show that either email or password entered is wrong
   const [wrongDetails, setWrongDetails] = useState(false);
-
-  const { setLoggedIn } = useContext(LoginContext);
-
+  //show loading icon till the response is laoded
   const [isLoading, setIsLoading] = useState(false);
 
+  //go to home page if already authenticated
   useEffect(() => {
-    if (loginDetails.email) {
-      setInvalidDetails(false);
+    if (JSON.parse(localStorage.getItem("IdToken"))) {
+      navigate("/me/home");
     }
-    if (loginDetails.password) {
+  }, [navigate]);
+
+  useEffect(() => {
+    if (loginDetails.email || loginDetails.password) {
       setInvalidDetails(false);
     }
 
@@ -34,12 +40,6 @@ function Login() {
 
     setWrongDetails(false);
   }, [loginDetails.email, loginDetails.password]);
-
-  // if (errorMessage) {
-  //   button_disable = true;
-  // } else {
-  //   button_disable = false;
-  // }
 
   function handleChange(e) {
     const name = e.target.name;
@@ -76,18 +76,16 @@ function Login() {
           );
           localStorage.setItem("IdToken", JSON.stringify(res.headers.idtoken));
 
-          const setHeaders = {
+          const setAuthHeaders = {
             Authorization: JSON.parse(localStorage.getItem("IdToken")),
             AccessToken: JSON.parse(localStorage.getItem("AccessToken")),
           };
-          setLoggedIn(true);
-          setIsLoading(false);
-          setBtnDisable(false);
+
           if (res.data.statusCode === "200") {
             axios({
               method: "get",
               url: "/api/me",
-              headers: setHeaders,
+              headers: setAuthHeaders,
             })
               .then((res) => {
                 console.log(res);
@@ -101,7 +99,11 @@ function Login() {
                   JSON.stringify(res.data.user.email)
                 );
 
-                return navigate("/me");
+                //setLoggedIn(true);
+                setIsLoading(false);
+                setBtnDisable(false);
+
+                navigate("/me/home");
               })
               .catch((err) => {
                 console.log(err);
@@ -165,6 +167,10 @@ function Login() {
             <div>
               <button
                 className="bg-cyan-600 hover:bg-cyan-700 py-1 w-80 rounded mt-2 text-white text-lg font-semibold"
+                // onClick={(e) => {
+                //   localStorage.setItem("Auth", JSON.stringify(true));
+                //   navigate("/me/home");
+                // }}
                 onClick={handleSubmit}
                 disabled={btnDisable}
               >

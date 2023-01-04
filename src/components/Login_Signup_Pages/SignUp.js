@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function SignUp() {
+  //sign up page field details
   const [signUpDetails, setSignUpDetails] = useState({
     firstName: "",
     lastName: "",
@@ -12,13 +13,18 @@ function SignUp() {
     confirmPassword: "",
   });
 
+  //email validation error msg
   const [errorMessageEmail, setErrorMessageEmail] = useState(false);
+  //password matching with confirm password error msg
   const [errorMessagePassword, setErrorMessagePassword] = useState(false);
+  //password requirement matching error msg
   const [errorMessagePasswordValidation, setErrorMessagePasswordValidation] =
     useState(false);
+  //show loading till repsonse loaded
   const [isLoading, setIsLoading] = useState(false);
+  //disable sign up button till response is loading
   const [btnDisable, setBtnDisable] = useState(false);
-
+  //to navigate to login page after sign up success
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -73,33 +79,29 @@ function SignUp() {
   }
 
   useEffect(() => {
-    if (signUpDetails.email && !signUpDetails.email.includes("@gmail.")) {
-      setErrorMessageEmail(true);
-    } else {
-      setErrorMessageEmail(false);
-    }
+    setErrorMessageEmail(
+      signUpDetails.email && !signUpDetails.email.includes("@gmail.")
+        ? true
+        : false
+    );
 
+    //password regex
     var regularExpression =
       /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
 
-    if (
-      signUpDetails.password &&
-      !regularExpression.test(signUpDetails.password)
-    ) {
-      setErrorMessagePasswordValidation(true);
-    } else {
-      setErrorMessagePasswordValidation(false);
-    }
+    setErrorMessagePasswordValidation(
+      signUpDetails.password && !regularExpression.test(signUpDetails.password)
+        ? true
+        : false
+    );
 
-    if (
+    setErrorMessagePassword(
       signUpDetails.password &&
-      signUpDetails.confirmPassword &&
-      signUpDetails.password !== signUpDetails.confirmPassword
-    ) {
-      setErrorMessagePassword(true);
-    } else {
-      setErrorMessagePassword(false);
-    }
+        signUpDetails.confirmPassword &&
+        signUpDetails.password !== signUpDetails.confirmPassword
+        ? true
+        : false
+    );
   }, [
     signUpDetails.email,
     signUpDetails.confirmPassword,
