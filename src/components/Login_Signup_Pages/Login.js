@@ -21,13 +21,17 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   //go to home page if already authenticated
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("IdToken"))) {
-      navigate("/me/home");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (JSON.parse(localStorage.getItem("Auth"))) {
+  //     navigate("/me/home");
+  //   }
+  // }, [navigate]);
 
   useEffect(() => {
+    if (JSON.parse(localStorage.getItem("Auth"))) {
+      navigate("/me/home");
+    }
+
     if (loginDetails.email || loginDetails.password) {
       setInvalidDetails(false);
     }
@@ -39,7 +43,7 @@ function Login() {
     }
 
     setWrongDetails(false);
-  }, [loginDetails.email, loginDetails.password]);
+  }, [loginDetails.email, loginDetails.password, navigate]);
 
   function handleChange(e) {
     const name = e.target.name;
@@ -68,6 +72,7 @@ function Login() {
         method: "post",
         url: "/api/login",
         data: JSON.stringify(loginDetails),
+        headers: { "content-type": "application/json" },
       })
         .then((res) => {
           localStorage.setItem(
@@ -75,41 +80,12 @@ function Login() {
             JSON.stringify(res.headers.accesstoken)
           );
           localStorage.setItem("IdToken", JSON.stringify(res.headers.idtoken));
+          localStorage.setItem("Auth", JSON.stringify(true));
+          localStorage.setItem("userEmail", JSON.stringify(loginDetails.email));
 
-          const setAuthHeaders = {
-            Authorization: JSON.parse(localStorage.getItem("IdToken")),
-            AccessToken: JSON.parse(localStorage.getItem("AccessToken")),
-          };
-
-          if (res.data.statusCode === "200") {
-            axios({
-              method: "get",
-              url: "/api/me",
-              headers: setAuthHeaders,
-            })
-              .then((res) => {
-                console.log(res);
-
-                localStorage.setItem(
-                  "name",
-                  JSON.stringify(res.data.user.name)
-                );
-                localStorage.setItem(
-                  "email",
-                  JSON.stringify(res.data.user.email)
-                );
-
-                //setLoggedIn(true);
-                setIsLoading(false);
-                setBtnDisable(false);
-
-                navigate("/me/home");
-              })
-              .catch((err) => {
-                console.log(err);
-                return { error: err.message };
-              });
-          }
+          setIsLoading(false);
+          setBtnDisable(false);
+          navigate("/me/home");
         })
         .catch((err) => {
           setBtnDisable(false);
@@ -167,8 +143,12 @@ function Login() {
             <div>
               <button
                 className="bg-cyan-600 hover:bg-cyan-700 py-1 w-80 rounded mt-2 text-white text-lg font-semibold"
-                // onClick={(e) => {
+                //onClick={(e) => {
                 //   localStorage.setItem("Auth", JSON.stringify(true));
+                //   localStorage.setItem(
+                //     "userEmail",
+                //     JSON.stringify("shaik.rehman07@gmail.com")
+                //   );
                 //   navigate("/me/home");
                 // }}
                 onClick={handleSubmit}

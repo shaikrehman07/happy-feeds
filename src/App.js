@@ -6,12 +6,12 @@ import SignUp from "./components/Login_Signup_Pages/SignUp";
 import PrivateRoute from "./PrivateRoute";
 
 function App() {
-  const authToken = JSON.parse(localStorage.getItem("IdToken"));
-  const isAuth = authToken ? true : false;
-  console.log("isAuth " + isAuth);
+  // const authToken = JSON.parse(localStorage.getItem("IdToken"));
+  // const isAuth = authToken ? true : false;
+  // console.log("isAuth " + isAuth);
 
-  // const auth = JSON.parse(localStorage.getItem("Auth"));
-  // console.log("Auth "+auth);
+  const auth = JSON.parse(localStorage.getItem("Auth"));
+  console.log("Auth " + auth);
   return (
     <React.Fragment>
       <Router>

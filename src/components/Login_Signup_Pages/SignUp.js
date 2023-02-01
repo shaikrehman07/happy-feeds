@@ -54,21 +54,29 @@ function SignUp() {
     ) {
       setIsLoading(true);
       setBtnDisable(true);
+
       axios({
         method: "post",
-        url: "/api/users",
+        url: "/api/signup",
         data: JSON.stringify({
-          firstName: signUpDetails.firstName,
-          lastName: signUpDetails.lastName,
+          firstName:
+            signUpDetails.firstName.charAt(0).toUpperCase() +
+            signUpDetails.firstName.slice(1).toLowerCase(),
+          lastName:
+            signUpDetails.lastName.charAt(0).toUpperCase() +
+            signUpDetails.lastName.slice(1).toLowerCase(),
           email: signUpDetails.email,
           password: signUpDetails.password,
         }),
+        headers: { "Content-Type": "application/json" },
       })
         .then((res) => {
           console.log(res.data);
           setIsLoading(false);
           setBtnDisable(false);
-          return navigate("/");
+          if (res.data.successful === true) {
+            return navigate("/");
+          }
         })
         .catch((err) => {
           setIsLoading(false);
@@ -183,7 +191,7 @@ function SignUp() {
           </div>
           <div>
             <button
-              className="w-96 bg-cyan-600 hover:bg-cyan-700 py-1 mt-2 rounded text-white tet-lg font-semibold"
+              className="w-96 bg-cyan-600 hover:bg-cyan-700 py-1 mt-2 rounded text-white text-lg font-semibold"
               onClick={handleSubmit}
               disabled={btnDisable}
             >
