@@ -4,12 +4,14 @@ import { MdOutlineCancel } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import Compressor from "compressorjs";
 import { IoIosImages } from "react-icons/io";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function Create() {
   const [file, setFile] = useState();
   const caption = useRef();
   const [cancelPhoto, setCancelPhoto] = useState(false);
   const [done, setDone] = useState(false);
+  const [load, setLoad] = useState(false);
 
   function handleChange(event) {
     new Compressor(event.target.files[0], {
@@ -37,6 +39,8 @@ function Create() {
     formData.append("File", file);
     formData.append("caption", caption.current.value);
 
+    setLoad(true);
+
     const setAuthHeaders = {
       Authorization: JSON.parse(localStorage.getItem("IdToken")),
       AccessToken: JSON.parse(localStorage.getItem("AccessToken")),
@@ -51,6 +55,8 @@ function Create() {
     })
       .then((res) => {
         console.log(res.data);
+
+        setLoad(false);
         setDone(true);
       })
       .catch((err) => {
@@ -151,9 +157,9 @@ function Create() {
 
           {(file || cancelPhoto) && (
             <div>
-              <div>Caption:</div>
+              <div className="text-md font-medium text-gray-700">Caption:</div>
               <textarea
-                className="border-2 border-gray-100 rounded outline-none w-[250px] h-24  mt-1 placeholder-gray-500 focus:placeholder-opacity-0"
+                className="border-2 border-gray-100 text-gray-700 text-md font-normal rounded outline-none w-[250px] h-24  mt-1 placeholder-gray-500 focus:placeholder-opacity-0"
                 placeholder="Write caption...."
                 name="caption"
                 ref={caption}
@@ -162,13 +168,20 @@ function Create() {
           )}
 
           {file && (
-            <div className="absolute bottom-0 right-44">
+            <div className="absolute bottom-0 right-44 flex">
               <button
                 className="w-20 bg-cyan-600 hover:bg-cyan-700 p-2 rounded text-white tet-lg font-semibold"
                 onClick={handleUpload}
+                disabled={load}
               >
                 Done
               </button>
+              {load && (
+                <AiOutlineLoading3Quarters
+                  className="ml-2 h-4 w-4 animate-spin text-black self-center"
+                  size="8px"
+                />
+              )}
             </div>
           )}
         </div>
