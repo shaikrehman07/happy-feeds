@@ -1,2 +1,2 @@
-/api/* https://etk12ntpib.execute-api.us-east-1.amazonaws.com/Prod/api/:splat 200
+/api/* http://ec2-35-175-246-59.compute-1.amazonaws.com:8080/api/:splat 200
 /* /index.html 200
