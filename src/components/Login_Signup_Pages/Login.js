@@ -58,11 +58,11 @@ function Login() {
       return;
     }
     if (errorMessage) {
-      console.log("not executed...");
+      //console.log("not executed...");
       return;
     }
     if (btnDisable) {
-      console.log("disabled....");
+      //console.log("disabled....");
       return;
     }
     if (loginDetails.email && loginDetails.password) {

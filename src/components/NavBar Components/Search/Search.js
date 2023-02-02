@@ -35,8 +35,6 @@ function Search() {
     }
   }, [name]);
 
-  console.log(searchUserList);
-
   return (
     <div>
       <div className="flex justify-center">

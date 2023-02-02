@@ -45,7 +45,7 @@ function Home() {
       headers: setAuthHeaders,
     })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setUserHome(res.data);
       })
       .catch((err) => {
@@ -59,8 +59,6 @@ function Home() {
         }
       });
   }, [navigate]);
-
-  console.log(userHome);
 
   return (
     <div className="flex flex-row ml-10">

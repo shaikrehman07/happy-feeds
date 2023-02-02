@@ -3,6 +3,7 @@ import axios from "axios";
 
 function UserPhotos() {
   const [imgArray, setImgArray] = useState([]);
+  const [dataReceived, setDataReceived] = useEffect(false);
 
   const b64toBlob = (b64Data, sliceSize = 512) => {
     const byteCharacters = atob(b64Data);
@@ -36,6 +37,7 @@ function UserPhotos() {
     })
       .then((res) => {
         setImgArray(res.data);
+        setDataReceived(true);
       })
       .catch((err) => {
         console.log(err);
@@ -55,11 +57,11 @@ function UserPhotos() {
             </div>
           ))}
         </div>
-      ) : (
+      ) : dataReceived === true ? (
         <div className="font-medium text-lg text-gray-700">
           No Memories to display
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

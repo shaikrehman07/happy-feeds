@@ -43,7 +43,7 @@ function SignUp() {
       return;
     }
     if (btnDisable) {
-      console.log("disabled....");
+      //console.log("disabled....");
       return;
     }
     if (
@@ -71,7 +71,7 @@ function SignUp() {
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           setIsLoading(false);
           setBtnDisable(false);
           if (res.data.successful === true) {

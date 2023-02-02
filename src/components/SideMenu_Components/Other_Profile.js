@@ -54,7 +54,7 @@ function OtherProfile() {
       headers: setAuthHeaders,
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -73,7 +73,7 @@ function OtherProfile() {
       headers: setAuthHeaders,
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         axios({
           method: "get",
           url: `/api/${JSON.parse(
@@ -82,7 +82,7 @@ function OtherProfile() {
           headers: setAuthHeaders,
         })
           .then((res) => {
-            console.log(res.data);
+            //console.log(res.data);
             setOtherUserDetails(res.data);
           })
           .catch((err) => {
@@ -95,7 +95,6 @@ function OtherProfile() {
   }
 
   useEffect(() => {
-    console.log("use Effect");
     if (user === JSON.parse(localStorage.getItem("userEmail"))) {
       navigate("/me/userProfile/photos");
     }
@@ -112,7 +111,7 @@ function OtherProfile() {
         headers: setAuthHeaders,
       })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           setOtherUserDetails(res.data);
         })
         .catch((err) => {

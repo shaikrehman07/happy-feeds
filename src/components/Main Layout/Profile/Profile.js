@@ -51,8 +51,8 @@ function Profile() {
       data: value,
       headers: setAuthHeaders,
     })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        //console.log(res.data);
       })
       .catch((err) => {
         console.log(err.data);
@@ -63,7 +63,7 @@ function Profile() {
     new Compressor(event.target.files[0], {
       quality: 0.5,
       success(result) {
-        console.log(result);
+        //console.log(result);
         setNewImage(result);
       },
       error(err) {
@@ -85,7 +85,7 @@ function Profile() {
       headers: setAuthHeaders,
     })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         const new_name =
           res.data.name.charAt(0).toUpperCase() + res.data.name.slice(1);
         setName(new_name);

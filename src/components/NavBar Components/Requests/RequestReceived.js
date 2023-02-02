@@ -18,7 +18,7 @@ function RequestReceived() {
       headers: setAuthHeaders,
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setReceivedList((updatedList) => {
           return updatedList.filter((email) => email !== userName);
         });

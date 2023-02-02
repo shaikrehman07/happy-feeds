@@ -6,7 +6,7 @@ function RequestSent() {
   const [dataReceived, setDataReceived] = useState(false);
 
   useEffect(() => {
-    console.log("sent use Effect");
+    //console.log("sent use Effect");
     const setAuthHeaders = {
       Authorization: JSON.parse(localStorage.getItem("IdToken")),
       AccessToken: JSON.parse(localStorage.getItem("AccessToken")),
@@ -17,7 +17,7 @@ function RequestSent() {
       headers: setAuthHeaders,
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setSentList(res.data);
         setDataReceived(true);
       })

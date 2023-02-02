@@ -20,7 +20,7 @@ function Create() {
       // The compression process is asynchronous,
       // which means you have to access the `result` in the `success` hook function.
       success(result) {
-        console.log(result.name);
+        //console.log(result.name);
         setFile(result);
       },
       error(err) {
@@ -53,8 +53,8 @@ function Create() {
       data: formData,
       headers: setAuthHeaders,
     })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        //console.log(res.data);
 
         setLoad(false);
         setDone(true);

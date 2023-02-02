@@ -11,7 +11,7 @@ function App() {
   // console.log("isAuth " + isAuth);
 
   const auth = JSON.parse(localStorage.getItem("Auth"));
-  console.log("Auth " + auth);
+  //console.log("Auth " + auth);
   return (
     <React.Fragment>
       <Router>
