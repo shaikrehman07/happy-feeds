@@ -3,7 +3,7 @@ import axios from "axios";
 
 function UserPhotos() {
   const [imgArray, setImgArray] = useState([]);
-  const [dataReceived, setDataReceived] = useEffect(false);
+  const [dataReceived, setDataReceived] = useState(false);
 
   const b64toBlob = (b64Data, sliceSize = 512) => {
     const byteCharacters = atob(b64Data);
