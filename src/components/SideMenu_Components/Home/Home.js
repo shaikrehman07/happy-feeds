@@ -14,6 +14,8 @@ function Home() {
     userFeedsList: [],
   });
 
+  const [dataReceived, setDataReceived] = useState(false);
+
   const b64toBlob = (b64Data, sliceSize = 512) => {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
@@ -47,6 +49,7 @@ function Home() {
       .then((res) => {
         //console.log(res);
         setUserHome(res.data);
+        setDataReceived(true);
       })
       .catch((err) => {
         if (err.response.data.status === 401) {
@@ -62,7 +65,7 @@ function Home() {
 
   return (
     <div className="flex flex-row ml-10">
-      {userHome.userFeedsList.length === 0 ? (
+      {dataReceived === true && userHome.userFeedsList.length === 0 ? (
         <div className="w-4/5">
           <div className="text-3xl text-gray-700 font-medium p-4">
             No Feeds!!!
@@ -71,12 +74,12 @@ function Home() {
             Connect to see feeds...
           </div>
         </div>
-      ) : (
+      ) : dataReceived === true && userHome.userFeedsList.length > 0 ? (
         <div className="">
           <div className="w-4/5">
             {userHome.userFeedsList.map((feed, index) => (
               <div className="ml-10 px-20 pb-5" key={index}>
-                <div className="h-[630px] w-[500px] border border-gray-300 rounded-md">
+                <div className=" w-[500px] max-h-max border border-gray-300 rounded-md">
                   <div className="px-2 py-4 text-lg font-medium">
                     {feed.email}
                   </div>
@@ -90,10 +93,18 @@ function Home() {
                       <AiOutlineHeart size="25px" />
                     </button>
                   </div>
-                  <div className="px-2 pb-1 flex">
-                    <div className="font-medium">{feed.name}&nbsp;&nbsp;</div>
-                    <div className="font-sm">
-                      {feed.caption === "no value" ? "" : feed.caption}
+                  <div className="px-2 pb-1 flex flex-col">
+                    <div className="font-sm font-semibold">
+                      {feed.name}&nbsp;&nbsp;
+                    </div>
+                    <div>
+                      {feed.caption === "no value" ? (
+                        ""
+                      ) : (
+                        <div className="font-sm break-normal">
+                          {feed.caption}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -101,6 +112,8 @@ function Home() {
             ))}
           </div>
         </div>
+      ) : (
+        <div className="w-4/5"></div>
       )}
       <div>
         <ProfileStatus posts={userHome.posts} feeds={userHome.feeds} />
