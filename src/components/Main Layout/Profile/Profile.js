@@ -32,11 +32,12 @@ function Profile() {
   }
 
   function getBase64StringFromDataURL(dataURL) {
-    dataURL.replace("data:", "").replace(/^.+,/, "");
+    return dataURL.replace("data:", "").replace(/^.+,/, "");
   }
 
   function saveImageonServer(file) {
     const value = getBase64StringFromDataURL(file);
+
     const setAuthHeaders = {
       Authorization: JSON.parse(localStorage.getItem("IdToken")),
       AccessToken: JSON.parse(localStorage.getItem("AccessToken")),
@@ -104,7 +105,7 @@ function Profile() {
           style={{ textAlign: "center" }}
           src={`${
             image
-              ? URL.createObjectURL(image)
+              ? image
               : dp.length !== 0
               ? `data:image/png;base64,${dp}`
               : name.length !== 0
