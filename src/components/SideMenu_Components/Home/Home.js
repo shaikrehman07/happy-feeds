@@ -71,7 +71,10 @@ function Home() {
             No Feeds!!!
           </div>
           <div className="text-xl text-gray-700 font-medium p-4">
-            Connect to see feeds...
+            Connect with People...
+          </div>
+          <div className="text-xl text-gray-700 font-medium p-4">
+            Feeds are displayed when your friend posts.
           </div>
         </div>
       ) : dataReceived === true && userHome.userFeedsList.length > 0 ? (
