@@ -119,7 +119,7 @@ function Create() {
                     className="text-sm cursor-pointer w-36 hidden"
                     type="file"
                     onChange={handleChange}
-                    accept="image/*"
+                    accept="image/png, image/jpeg"
                   />
                   <div className="w-max cursor-pointer px-4 py-1 text-sm text-cyan-600 font-semibold rounded-full border border-cyan-700 hover:text-white hover:bg-cyan-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-cyan-600 focus:ring-offset-2">
                     upload
@@ -146,7 +146,7 @@ function Create() {
                   className="text-sm cursor-pointer w-36 hidden"
                   type="file"
                   onChange={handleChangeOther}
-                  accept="image/*"
+                  accept="image/png, image/jpeg"
                 />
                 <div className="w-max cursor-pointer active:bg-cyan-700 px-4 py-1 text-sm text-cyan-600 font-semibold rounded-full border border-cyan-700 hover:text-white hover:bg-cyan-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-cyan-600 focus:ring-offset-2">
                   other photo

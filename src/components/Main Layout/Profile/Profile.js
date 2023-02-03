@@ -138,7 +138,7 @@ function Profile() {
                         className="text-sm cursor-pointer w-36 hidden"
                         type="file"
                         onChange={handleChange}
-                        accept="image/*"
+                        accept="image/png, image/jpeg"
                       />
                       <div className="w-max text bg-cyan-600 hover:bg-cyan-700 text-white rounded font-semibold cursor-pointer p-1 px-3">
                         update
