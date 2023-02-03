@@ -65,7 +65,7 @@ function SignUp() {
           lastName:
             signUpDetails.lastName.charAt(0).toUpperCase() +
             signUpDetails.lastName.slice(1).toLowerCase(),
-          email: signUpDetails.email,
+          email: signUpDetails.email.toLowerCase(),
           password: signUpDetails.password,
         }),
         headers: { "Content-Type": "application/json" },

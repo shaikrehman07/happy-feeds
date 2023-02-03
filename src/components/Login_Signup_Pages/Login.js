@@ -68,10 +68,16 @@ function Login() {
     if (loginDetails.email && loginDetails.password) {
       setBtnDisable(true);
       setIsLoading(true);
+
+      const email = loginDetails.email.toLowerCase();
+
       axios({
         method: "post",
         url: "/api/login",
-        data: JSON.stringify(loginDetails),
+        data: {
+          email: email,
+          password: loginDetails.password,
+        },
         headers: { "content-type": "application/json" },
       })
         .then((res) => {
@@ -81,7 +87,7 @@ function Login() {
           );
           localStorage.setItem("IdToken", JSON.stringify(res.headers.idtoken));
           localStorage.setItem("Auth", JSON.stringify(true));
-          localStorage.setItem("userEmail", JSON.stringify(loginDetails.email));
+          localStorage.setItem("userEmail", JSON.stringify(email));
 
           setIsLoading(false);
           setBtnDisable(false);
