@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineHeart } from "react-icons/ai";
+import Like from "./Like";
 
 function Home() {
   const navigate = useNavigate();
@@ -92,9 +92,10 @@ function Home() {
                     className="object-scale-down h-[500px] w-[500px] border border-gray-300 border-l-0 border-r-0"
                   ></img>
                   <div className="px-2 py-1 pt-2">
-                    <button>
-                      <AiOutlineHeart size="25px" />
-                    </button>
+                    <Like
+                      otherUserEmail={feed.email}
+                      imgIndex={feed.imgIndex}
+                    />
                   </div>
                   <div className="px-2 pb-1 flex flex-col">
                     <div className="font-sm font-semibold">
